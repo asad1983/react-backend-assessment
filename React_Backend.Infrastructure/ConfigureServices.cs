@@ -17,7 +17,7 @@ namespace React_Backend.Infrastructure
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             //// For Identity
-            services.AddIdentityCore<IdentityUser>().AddRoles<IdentityRole>()
+            services.AddIdentityCore<ApplicationUser>().AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
 

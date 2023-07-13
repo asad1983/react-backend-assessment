@@ -12,7 +12,7 @@ using React_Backend.Infrastructure.Context;
 namespace React_Backend.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230712165328_init")]
+    [Migration("20230713103942_init")]
     partial class init
     {
         /// <inheritdoc />
