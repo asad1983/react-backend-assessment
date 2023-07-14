@@ -7,6 +7,6 @@ namespace React_Backend.Application.Interfaces
     {
         public IEnumerable<object> GetAll();
         public void CreateAppointment(AppointmentModel model);
-        public void DeleteAppointment(string appointmentId);
+        public string DeleteAppointment(string appointmentId);
     }
 }

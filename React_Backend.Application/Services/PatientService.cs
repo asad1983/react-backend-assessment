@@ -34,10 +34,17 @@ namespace React_Backend.Application.Services
             appointmentDto.AppointmentId=Guid.NewGuid();
             var result=_appointmentRepository.Create(appointmentDto);
         }
-        public void DeleteAppointment(string appointmentId)
+        public string DeleteAppointment(string appointmentId)
         {
             var obj = _appointmentRepository.Get(appointmentId);
-            _appointmentRepository.Delete(obj);
+            var patientId= _identifyHelper.UserId;
+            if(patientId==obj.PatientId)
+            {
+                _appointmentRepository.Delete(obj);
+                return "Appointment Deleted";
+            }
+            return "";
+            
         }
     }
 }

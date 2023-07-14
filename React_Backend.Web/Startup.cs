@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using React_Backend.Application.Middlewares;
+using React_Backend.Web.Filters;
 using React_Backend.Web.Validation;
 using System.Text;
 
@@ -26,6 +27,7 @@ namespace React_Backend.Application.Web
             // For Entity Framework
             services.AddScoped<ValidationFilterAttribute>();
             services.AddApplicationServices(Configuration);
+            services.AddScoped<AppointmentDeleteFilter>();
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

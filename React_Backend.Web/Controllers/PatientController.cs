@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using React_Backend.Application.Interfaces;
 using React_Backend.Application.Models;
+using React_Backend.Web.Filters;
 using System.ComponentModel;
 
 namespace React_Backend.Web.Controllers
@@ -37,10 +38,11 @@ namespace React_Backend.Web.Controllers
             return Ok("Created");
         }
 
-        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Patient")]
+       // [Authorize(AuthenticationSchemes = "Bearer", Roles = "Patient")]
         [HttpDelete]
         [Description("Delete a new Appointment")]
         [Route("{id}")]
+        [ServiceFilter(typeof(AppointmentDeleteFilter), Order = 1)]
         public IActionResult Delete(string id)
         {
             _service.DeleteAppointment(id);

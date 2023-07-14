@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using React_Backend.Application.Interfaces;
 using React_Backend.Application.Models;
 using React_Backend.Application.Services;
+using React_Backend.Web.Filters;
 using System.Data;
 
 namespace React_Backend.Web.Controllers
@@ -24,6 +25,7 @@ namespace React_Backend.Web.Controllers
 
         [Authorize(AuthenticationSchemes = "Bearer", Roles = "Doctor")]
         [HttpGet(Name = "doctorappointments")]
+        
         public IEnumerable<AppointmentModel> Get()
         {
             return _doctorService.GetAll();
