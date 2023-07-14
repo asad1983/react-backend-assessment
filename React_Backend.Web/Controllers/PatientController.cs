@@ -2,8 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using React_Backend.Application.Interfaces;
 using React_Backend.Application.Models;
-using React_Backend.Application.Services;
-using System.Data;
+using System.ComponentModel;
 
 namespace React_Backend.Web.Controllers
 {
@@ -27,6 +26,15 @@ namespace React_Backend.Web.Controllers
         public IEnumerable<AppointmentModel> Get()
         {
             return _service.GetAll();
+        }
+
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Patient")]
+        [HttpPost(Name = "createappointment")]
+        [Description("Create a new Appointment")]
+        public IActionResult Create(AppointmentModel model)
+        {
+             _service.CreateAppointment(model);
+            return Ok("Created");
         }
     }
 }

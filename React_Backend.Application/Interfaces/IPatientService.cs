@@ -6,5 +6,6 @@ namespace React_Backend.Application.Interfaces
     public interface IPatientService
     {
         public IEnumerable<AppointmentModel> GetAll();
+        public void CreateAppointment(AppointmentModel model);
     }
 }

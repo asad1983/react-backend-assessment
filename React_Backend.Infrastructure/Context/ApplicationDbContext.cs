@@ -11,6 +11,7 @@ namespace React_Backend.Infrastructure.Context
         {
 
         }
+        public DbSet<Appointment> Appointments => Set<Appointment>();
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
