@@ -21,11 +21,14 @@ namespace React_Backend.Application.Models
         [Required(ErrorMessage = "User Name is required")]
         public string Username { get; set; }
 
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "Please provide valie email")]
         [Required(ErrorMessage = "Email is required")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "Please provide valie email")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Password is required")]
+
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
 

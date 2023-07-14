@@ -12,6 +12,7 @@ namespace React_Backend.Infrastructure.Context
 
         }
         public DbSet<Appointment> Appointments => Set<Appointment>();
+        public DbSet<Schedule> Schedules => Set<Schedule>();
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -22,6 +23,15 @@ namespace React_Backend.Infrastructure.Context
             builder.Entity<ApplicationUser>()
                 .Property(e => e.LastName)
                 .HasMaxLength(100);
+        }
+
+        protected override void ConfigureConventions(ModelConfigurationBuilder builder)
+        {
+            base.ConfigureConventions(builder);
+            builder.Properties<DateOnly>()
+            .HaveConversion<DateOnlyConverter>();
+            builder.Properties<TimeOnly>()
+                .HaveConversion<TimeOnlyConverter>();
         }
     }
 }

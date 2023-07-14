@@ -80,7 +80,7 @@ namespace React_Backend.Web.Controllers
         [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))] 
         [Route("register")]
-        public async Task<IActionResult> Register([FromBody] Application.Models.RegisterModel model)
+        public async Task<IActionResult> Register([FromForm] Application.Models.RegisterModel model)
         {
             if (!ModelState.IsValid)
             {

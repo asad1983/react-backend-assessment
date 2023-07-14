@@ -21,8 +21,10 @@ namespace React_Backend.Application
             services.AddTransient<ISpecialiasationService, SpecialiasationService>();
             services.AddTransient<IDoctorService, DoctorService>();
             services.AddTransient<IPatientService, PatientService>();
+            services.AddTransient<IScheduleService, ScheduleService>();
 
             services.AddAutoMapper(typeof(AppointmentProfile));
+            services.AddAutoMapper(typeof(ScheduleProfile));
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IdentityHelper>();
 

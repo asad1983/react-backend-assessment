@@ -1,10 +1,12 @@
 ﻿
+
+
 using React_Backend.Application.Models;
 
 namespace React_Backend.Application.Interfaces
 {
-    public interface IDoctorService
+    public interface IScheduleService
     {
-        public IEnumerable<object> GetAll();
+        public Schedule Create(Schedule model);
     }
 }

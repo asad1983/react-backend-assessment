@@ -16,6 +16,7 @@ namespace React_Backend.Infrastructure
         {
 
             services.AddTransient<IAppointmentRepository, AppointmentRepository>();
+            services.AddTransient<IScheduleRepository, ScheduleRepository>();
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             //// For Identity

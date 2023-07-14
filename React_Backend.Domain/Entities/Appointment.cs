@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using React_Backend.Domain.Enums;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
+
 
 namespace React_Backend.Domain.Entities
 {
@@ -16,7 +17,11 @@ namespace React_Backend.Domain.Entities
         
         public string PatientId { get; set; }
         
-        public DateTime AppointmentDateTime{ get; set;}
+        public DateOnly AppointmentDate{ get; set;}
+        public TimeOnly StartTime { get; set; }
+        public TimeOnly EndTime { get; set; }
+
+        public EnumEntities.AppointmentStatus Status { get; set; }
         public string? Notes { get; set;}
     }
 }
