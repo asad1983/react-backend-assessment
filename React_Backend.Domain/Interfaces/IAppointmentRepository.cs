@@ -7,8 +7,8 @@ namespace React_Backend.Domain.Interfaces
     {
         
         IEnumerable<Appointment> GetAll();
-        IEnumerable<Appointment> GetAllPatientAppoints(string patientId);
-
+        IEnumerable<object> GetAllPatientAppoints(string patientId);
+        Appointment Get(string appointmentId);
 
     }
 }

@@ -21,9 +21,9 @@ namespace React_Backend.Web.Controllers
             _service = service;
         }
 
-       //[Authorize(AuthenticationSchemes = "Bearer", Roles = "Doctor")]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Patient")]
         [HttpGet(Name = "patientsappointments")]
-        public IEnumerable<AppointmentModel> Get()
+        public IEnumerable<object> Get()
         {
             return _service.GetAll();
         }
@@ -35,6 +35,16 @@ namespace React_Backend.Web.Controllers
         {
              _service.CreateAppointment(model);
             return Ok("Created");
+        }
+
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Patient")]
+        [HttpDelete]
+        [Description("Delete a new Appointment")]
+        [Route("{id}")]
+        public IActionResult Delete(string id)
+        {
+            _service.DeleteAppointment(id);
+            return Ok("Deleted");
         }
     }
 }

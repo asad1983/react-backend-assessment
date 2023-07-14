@@ -1,9 +1,8 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using React_Backend.Domain.Entities;
+using React_Backend.Application.Middlewares;
 using React_Backend.Web.Validation;
 using System.Text;
 
@@ -23,7 +22,7 @@ namespace React_Backend.Application.Web
         {
             //services.AddControllers();
             services.AddControllers(
-    options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
+            options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
             // For Entity Framework
             services.AddScoped<ValidationFilterAttribute>();
             services.AddApplicationServices(Configuration);
@@ -97,6 +96,7 @@ namespace React_Backend.Application.Web
                 c.RoutePrefix = "swagger";
 
             });
+            app.UseMiddleware<ErrorHandlerMiddleware>();
 
             app.UseCors("AllowOrigin");
 

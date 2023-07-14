@@ -19,11 +19,11 @@ namespace React_Backend.Application.Services
             _mapper = mapper;
             _identifyHelper = identifyHelper;
         }
-        public IEnumerable<AppointmentModel> GetAll()
+        public IEnumerable<object> GetAll()
         {
             var patientId = _identifyHelper.UserId;
             var data = _appointmentRepository.GetAllPatientAppoints(patientId);
-            var list = _mapper.Map<IEnumerable<AppointmentModel>>(data);
+            var list = _mapper.Map<IEnumerable<object>>(data);
             return list;
         }
         public void CreateAppointment(AppointmentModel model)
@@ -31,7 +31,13 @@ namespace React_Backend.Application.Services
             var appointmentDto = _mapper.Map<Appointment>(model);
             appointmentDto.AppointmentDateTime = DateTime.Now.AddHours(3);
             appointmentDto.PatientId = _identifyHelper.UserId;
+            appointmentDto.AppointmentId=Guid.NewGuid();
             var result=_appointmentRepository.Create(appointmentDto);
+        }
+        public void DeleteAppointment(string appointmentId)
+        {
+            var obj = _appointmentRepository.Get(appointmentId);
+            _appointmentRepository.Delete(obj);
         }
     }
 }

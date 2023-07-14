@@ -10,7 +10,7 @@ namespace React_Backend.Application.Mapper
     {
         public AppointmentProfile()
         {
-            CreateMap<Appointment, AppointmentModel>();
+            CreateMap<object, AppointmentModel>();
             CreateMap<AppointmentModel, Appointment>();
 
         }
