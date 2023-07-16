@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using React_Backend.Application.Helpers;
 using React_Backend.Application.Interfaces;
 using React_Backend.Application.Mapper;
 using React_Backend.Application.Services;
@@ -26,7 +25,7 @@ namespace React_Backend.Application
             services.AddAutoMapper(typeof(AppointmentProfile));
             services.AddAutoMapper(typeof(ScheduleProfile));
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddSingleton<IdentityHelper>();
+            
 
             services.AddInfrastructureServices(configure);
             return services;

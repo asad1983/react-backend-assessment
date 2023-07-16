@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using React_Backend.Application.Middlewares;
 using React_Backend.Web.Filters;
+using React_Backend.Web.Helpers;
 using React_Backend.Web.Validation;
 using System.Text;
 
@@ -47,7 +48,7 @@ namespace React_Backend.Application.Web
                     ValidateIssuerSigningKey = true
                 };
             });
-            
+            services.AddSingleton<IdentityHelper>();
             services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
             services.AddAuthorization();
             //services.AddSwaggerGen();

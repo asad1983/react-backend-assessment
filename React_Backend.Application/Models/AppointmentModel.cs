@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using React_Backend.Application.Enums;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace React_Backend.Application.Models
 {
@@ -13,6 +15,9 @@ namespace React_Backend.Application.Models
         [Required(ErrorMessage = "Doctor Id is required.")]
         public string DoctorId { get; set; }
 
+        [JsonIgnore]
+        public string PatientId { get; set; }
+
         [Required(ErrorMessage = "Appointment Date is required.")]
        
         public DateOnly AppointmentDate { get; set; }
@@ -25,5 +30,11 @@ namespace React_Backend.Application.Models
         [Required(ErrorMessage = "End Time is required.")]
         public TimeOnly EndTime { get; set; }
         public string? Notes { get; set; }
+
+        [JsonIgnore]
+        public EnumEntities.AppointmentStatus Status { get; set; }
+
+        [JsonIgnore]
+        public Guid? AppointmentId { get; set; }
     }
 }

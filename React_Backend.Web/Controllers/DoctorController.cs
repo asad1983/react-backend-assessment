@@ -1,10 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using React_Backend.Web.Helpers;
 using React_Backend.Application.Interfaces;
 using React_Backend.Application.Models;
-using React_Backend.Application.Services;
-using React_Backend.Web.Filters;
-using System.Data;
 
 namespace React_Backend.Web.Controllers
 {
@@ -15,28 +13,31 @@ namespace React_Backend.Web.Controllers
        
         public readonly IDoctorService _doctorService;
         public readonly IScheduleService _sheduleService;
+        private readonly IdentityHelper _identifyHelper;
+        //private readonly ILogger<DoctorController> _logger;
 
-        private readonly ILogger<DoctorController> _logger;
-
-        public DoctorController(ILogger<DoctorController> logger, IDoctorService doctorService, IScheduleService sheduleService)
+        public DoctorController( IDoctorService doctorService, IScheduleService sheduleService,IdentityHelper identifyHelper)
         {
-            _logger = logger;
             _doctorService = doctorService;
-            _sheduleService = sheduleService;   
-        }
+            _sheduleService = sheduleService;
+           _identifyHelper = identifyHelper
+;        }
 
         [Authorize(AuthenticationSchemes = "Bearer", Roles = "Doctor")]
         [HttpGet(Name = "doctorappointments")]
         
         public IEnumerable<object> Get()
         {
-            return _doctorService.GetAll();
+            var result = _doctorService.GetAll(_identifyHelper.UserId);
+            return result;
         }
         [Authorize(AuthenticationSchemes = "Bearer", Roles = "Doctor")]
         [HttpPost(Name = "addschedule")]
         public Schedule Create([FromForm] Schedule model)
         {
-            return _sheduleService.Create(model);
+            model.DoctorId = _identifyHelper.UserId;
+            var result = _sheduleService.Create(model);
+            return result;
 
         }
     }

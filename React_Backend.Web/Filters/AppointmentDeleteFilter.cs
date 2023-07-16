@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using React_Backend.Application.Helpers;
+using React_Backend.Web.Helpers;
 using React_Backend.Domain.Interfaces;
 using System;
 using System.Collections.Generic;

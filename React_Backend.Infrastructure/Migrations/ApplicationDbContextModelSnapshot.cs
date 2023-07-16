@@ -47,6 +47,22 @@ namespace React_Backend.Infrastructure.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "fab4fac1-c546-41de-aebc-a14da6895711",
+                            ConcurrencyStamp = "1",
+                            Name = "Doctor",
+                            NormalizedName = "Doctor"
+                        },
+                        new
+                        {
+                            Id = "c7b013f0-5201-4317-abd8-c211f91b7330",
+                            ConcurrencyStamp = "2",
+                            Name = "Patient",
+                            NormalizedName = "Patient"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -134,6 +150,18 @@ namespace React_Backend.Infrastructure.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "b74ddd14-6340-4840-95c2-db12554843e5",
+                            RoleId = "fab4fac1-c546-41de-aebc-a14da6895711"
+                        },
+                        new
+                        {
+                            UserId = "b74ddd14-6340-4840-95c2-db12554843e6",
+                            RoleId = "c7b013f0-5201-4317-abd8-c211f91b7330"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -205,10 +233,6 @@ namespace React_Backend.Infrastructure.Migrations
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
@@ -236,6 +260,48 @@ namespace React_Backend.Infrastructure.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "b74ddd14-6340-4840-95c2-db12554843e5",
+                            AccessFailedCount = 0,
+                            Address = "",
+                            ConcurrencyStamp = "bc63ffb1-e378-4b60-a0bf-ab86655a68cb",
+                            Email = "doctor@gmail.com",
+                            EmailConfirmed = true,
+                            FirstName = "doctor",
+                            LastName = "doctor",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "DOCTOR@GMAIL.COM",
+                            NormalizedUserName = "DOCTOR",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIwUFwplNxBjiQeT1Ap2/myCtaTHwoFaU1DfBKlqLDf35QRLawdlKeCAdQinboQ9AA==",
+                            PhoneNumber = "1234567890",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "c34bc9d9-5c77-4fe3-9ed7-782fd905f9fe",
+                            TwoFactorEnabled = false,
+                            UserName = "doctor"
+                        },
+                        new
+                        {
+                            Id = "b74ddd14-6340-4840-95c2-db12554843e6",
+                            AccessFailedCount = 0,
+                            Address = "",
+                            ConcurrencyStamp = "e5d27de9-f31c-453e-934a-687d22531b7d",
+                            Email = "patient@gmail.com",
+                            EmailConfirmed = true,
+                            FirstName = "patient",
+                            LastName = "patient",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "PATIENT@GMAIL.COM",
+                            NormalizedUserName = "PATIENT",
+                            PasswordHash = "AQAAAAIAAYagAAAAECS2wul4O82xqqLn1olDjOwQq54E5dpnvOv2cVBoy+SeswxAs9GjjHPNF1fYNkmxJA==",
+                            PhoneNumber = "1234567890",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "57a68df8-3dd0-459f-bccc-0a5665705fc9",
+                            TwoFactorEnabled = false,
+                            UserName = "patient"
+                        });
                 });
 
             modelBuilder.Entity("React_Backend.Domain.Entities.Appointment", b =>
@@ -314,6 +380,35 @@ namespace React_Backend.Infrastructure.Migrations
                     b.HasIndex("DoctorId");
 
                     b.ToTable("Schedules");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Day = "Monday",
+                            DoctorId = "b74ddd14-6340-4840-95c2-db12554843e5",
+                            EndTime = new TimeSpan(0, 12, 0, 0, 0),
+                            StartTime = new TimeSpan(0, 9, 0, 0, 0),
+                            Status = true
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Day = "TuseDay",
+                            DoctorId = "b74ddd14-6340-4840-95c2-db12554843e5",
+                            EndTime = new TimeSpan(0, 12, 0, 0, 0),
+                            StartTime = new TimeSpan(0, 9, 0, 0, 0),
+                            Status = true
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Day = "WednesDay",
+                            DoctorId = "b74ddd14-6340-4840-95c2-db12554843e5",
+                            EndTime = new TimeSpan(0, 12, 0, 0, 0),
+                            StartTime = new TimeSpan(0, 9, 0, 0, 0),
+                            Status = true
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

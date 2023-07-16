@@ -5,6 +5,6 @@ namespace React_Backend.Application.Interfaces
 {
     public interface IDoctorService
     {
-        public IEnumerable<object> GetAll();
+        public IEnumerable<object> GetAll(string doctorId);
     }
 }

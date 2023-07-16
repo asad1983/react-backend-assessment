@@ -1,6 +1,7 @@
 ﻿
 
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace React_Backend.Application.Models
 {
@@ -16,6 +17,8 @@ namespace React_Backend.Application.Models
 
         [DataType(DataType.Time)]
         public TimeOnly EndTime { get; set; }
-       // public bool Status { get; set; }
+
+        [JsonIgnore]
+        public string DoctorId { get; set; }
     }
 }

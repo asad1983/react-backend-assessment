@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using React_Backend.Application.Helpers;
 using React_Backend.Application.Interfaces;
 using React_Backend.Application.Models;
 using React_Backend.Domain.Entities;
@@ -14,27 +13,26 @@ namespace React_Backend.Application.Services
         private readonly IAppointmentRepository _appointmentRepository;
         private readonly IScheduleRepository _scheduleRepository;
         private readonly IMapper _mapper;
-        private readonly IdentityHelper _identifyHelper;
-        public PatientService(IAppointmentRepository appointmentRepository, IdentityHelper identifyHelper , IMapper mapper, IScheduleRepository scheduleRepository)
+
+        public PatientService(IAppointmentRepository appointmentRepository, IMapper mapper, IScheduleRepository scheduleRepository)
         {
             _appointmentRepository = appointmentRepository;
             _mapper = mapper;
-            _identifyHelper = identifyHelper;
             _scheduleRepository = scheduleRepository;
         }
-        public IEnumerable<object> GetAll()
+        public IEnumerable<object> GetAll(string patientId)
         {
-            var patientId = _identifyHelper.UserId;
+           // var patientId = _identifyHelper.UserId;
             var data = _appointmentRepository.GetAllPatientAppoints(patientId);
-            var list = _mapper.Map<IEnumerable<object>>(data);
-            return list;
+            //var list = _mapper.Map<IEnumerable<object>>(data);
+            return data;
         }
         public string CreateAppointment(AppointmentModel model)
         {
             var appointmentDto = _mapper.Map<Appointment>(model);
-            appointmentDto.Status = EnumEntities.AppointmentStatus.Booked;
-            appointmentDto.PatientId = _identifyHelper.UserId;
-            appointmentDto.AppointmentId=Guid.NewGuid();
+            //appointmentDto.Status = EnumEntities.AppointmentStatus.Booked;
+            //appointmentDto.PatientId = _identifyHelper.UserId;
+            
             var day=model.AppointmentDate.DayOfWeek;
             var doctorSchedules = _scheduleRepository.GetAll(model.DoctorId, day.ToString());
             if(doctorSchedules == null && doctorSchedules.Count()==0)

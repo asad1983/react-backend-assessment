@@ -97,16 +97,17 @@ namespace React_Backend.Web.Controllers
                 UserName = model.Username,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
-                Phone = model.Phone,
+                PhoneNumber = model.Phone,
                 Address = model.Address,
+                EmailConfirmed=true,
             };
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
                 return StatusCode(StatusCodes.Status500InternalServerError, new Application.Models.Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
-            if (!await _roleManager.RoleExistsAsync(Application.Models.UserRoles.Doctor))
-                await _roleManager.CreateAsync(new IdentityRole(Application.Models.UserRoles.Doctor));
-            if (!await _roleManager.RoleExistsAsync(Application.Models.UserRoles.Patient))
-                await _roleManager.CreateAsync(new IdentityRole(Application.Models.UserRoles.Patient));
+            //if (!await _roleManager.RoleExistsAsync(Application.Models.UserRoles.Doctor))
+            //    await _roleManager.CreateAsync(new IdentityRole(Application.Models.UserRoles.Doctor));
+            //if (!await _roleManager.RoleExistsAsync(Application.Models.UserRoles.Patient))
+            //    await _roleManager.CreateAsync(new IdentityRole(Application.Models.UserRoles.Patient));
 
             if (model.isDoctor)
             {

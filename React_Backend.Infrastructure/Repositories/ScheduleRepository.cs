@@ -14,7 +14,7 @@ namespace React_Backend.Infrastructure.Repositories
 
         public IEnumerable<Schedule> GetAll(string doctorId, string day)
         {
-            var schedules = _context.Schedules.Where(x=>x.DoctorId==doctorId && x.Day== day);
+            var schedules = _context.Schedules.Where(x=>x.DoctorId==doctorId && x.Day== day && x.Status);
             if (schedules != null) return schedules;
             return new List<Schedule>();
         }
