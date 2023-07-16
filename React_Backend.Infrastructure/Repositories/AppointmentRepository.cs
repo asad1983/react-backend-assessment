@@ -27,7 +27,7 @@ namespace React_Backend.Infrastructure.Repositories
             DateOnly formatDateOnly = DateOnly.FromDateTime(formatDateToday);
             var result = (from appointment in _context.Appointments.Where(x => x.DoctorId == doctorId && x.AppointmentDate>= formatDateOnly)
                           join doctor in _context.Users on appointment.PatientId equals doctor.Id
-                          select new { appointment.Title, appointment.Detail, Date = appointment.AppointmentDate, Patient = $"{doctor.FirstName} {doctor.LastName}" , appointment.StartTime,appointment.EndTime });
+                          select new { appointment.Title, appointment.Detail, Date = appointment.AppointmentDate, Patient = $"{doctor.FirstName} {doctor.LastName}" , appointment.StartTime,appointment.EndTime, Id = appointment.AppointmentId });
             if (result != null) return result;
             return new List<object>();
         }
@@ -41,7 +41,7 @@ namespace React_Backend.Infrastructure.Repositories
         {
             var result = (from appointment in _context.Appointments.Where(x=>x.PatientId == patientId)
                           join patient in _context.Users on appointment.DoctorId equals patient.Id
-                          select new { appointment.Title, appointment.Detail,Date= appointment.AppointmentDate, Doctor = $"{patient.FirstName} {patient.LastName}", appointment.StartTime, appointment.EndTime });
+                          select new { appointment.Title, appointment.Detail,Date= appointment.AppointmentDate, Doctor = $"{patient.FirstName} {patient.LastName}", appointment.StartTime, appointment.EndTime,Id=appointment.AppointmentId });
             //var query = _context.Appointments.Where(x=>x.PatientId==patientId);
             //if (query != null) return query;
             return result!;

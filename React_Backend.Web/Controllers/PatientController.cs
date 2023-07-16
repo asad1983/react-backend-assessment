@@ -53,5 +53,7 @@ namespace React_Backend.Web.Controllers
             _service.DeleteAppointment(id);
             return Ok("Deleted");
         }
+
+
     }
 }
