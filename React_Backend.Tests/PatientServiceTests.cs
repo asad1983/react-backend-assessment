@@ -76,6 +76,7 @@ public class PatientServiceTests
              });
          var date = DateTime.Now.AddDays(3);
         _appointmentRepository.Setup(m => m.GetAllPatientAppoints(Constant.PatientId)).Returns(appointmentList);
+
         _appointmentRepository.Setup(m => m.Get(Constant.AppointmentId)).Returns(new Appointment
         {
             Detail = "test",

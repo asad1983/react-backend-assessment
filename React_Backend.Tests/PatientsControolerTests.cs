@@ -105,7 +105,7 @@ public class PatientsControolerTests
     }
 
     [Test]
-    public void Patient_Apppointment_Get()
+    public void Patient_Apppointments_Get()
     {
         
         PatientController doct = new PatientController(_patientService.Object, _identityHelper.Object);

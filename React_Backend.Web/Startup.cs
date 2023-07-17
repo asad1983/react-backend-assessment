@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using React_Backend.Application.Middlewares;
 using React_Backend.Web.Filters;
 using React_Backend.Web.Helpers;
 using React_Backend.Web.Validation;
+using System.Reflection;
 using System.Text;
 
 namespace React_Backend.Application.Web
@@ -48,13 +50,15 @@ namespace React_Backend.Application.Web
                     ValidateIssuerSigningKey = true
                 };
             });
+
             services.AddSingleton<IdentityHelper>();
             services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
             services.AddAuthorization();
             //services.AddSwaggerGen();
             services.AddSwaggerGen(opt =>
             {
-                opt.SwaggerDoc("v1", new OpenApiInfo { Title = "MyAPI", Version = "v1" });
+                opt.SwaggerDoc("v1", new OpenApiInfo { Title = "Hospital", Version = "v1" });
+                
                 opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,
@@ -64,22 +68,25 @@ namespace React_Backend.Application.Web
                     BearerFormat = "JWT",
                     Scheme = "bearer"
                 });
-
+                opt.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory,
+                $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
                 opt.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
             {
-                Reference = new OpenApiReference
                 {
-                    Type=ReferenceType.SecurityScheme,
-                    Id="Bearer"
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type=ReferenceType.SecurityScheme,
+                            Id="Bearer"
+                        }
+                    },
+                    new string[]{}
                 }
-            },
-            new string[]{}
-        }
-    });
             });
+
+
+        });
            
            
 

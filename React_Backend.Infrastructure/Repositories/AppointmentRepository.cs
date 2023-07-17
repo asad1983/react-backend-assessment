@@ -12,20 +12,18 @@ namespace React_Backend.Infrastructure.Repositories
         {
             _context = context;
         }
-
-       
         public IEnumerable<Appointment> GetAll()
         {
             var query = _context.Appointments;
             if (query != null) return query;
             return null!;
         }
-        public IEnumerable<object> GetAll(string doctorId)
+        public IEnumerable<object> GetAll(AppointmentFilter model)
         {
-            var dateToday= DateTime.Now;
-            DateTime formatDateToday = new DateTime(dateToday.Year, dateToday.Month, dateToday.Day);
-            DateOnly formatDateOnly = DateOnly.FromDateTime(formatDateToday);
-            var result = (from appointment in _context.Appointments.Where(x => x.DoctorId == doctorId && x.AppointmentDate>= formatDateOnly)
+            //var dateToday= DateTime.Now;
+            //DateTime formatDateToday = new DateTime(dateToday.Year, dateToday.Month, dateToday.Day);
+            //DateOnly formatDateOnly = DateOnly.FromDateTime(formatDateToday);
+            var result = (from appointment in _context.Appointments.Where(x => x.DoctorId == model.DoctorId && x.AppointmentDate== model.Date)
                           join doctor in _context.Users on appointment.PatientId equals doctor.Id
                           select new { appointment.Title, appointment.Detail, Date = appointment.AppointmentDate, Patient = $"{doctor.FirstName} {doctor.LastName}" , appointment.StartTime,appointment.EndTime, Id = appointment.AppointmentId });
             if (result != null) return result;

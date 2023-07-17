@@ -2,7 +2,7 @@
 using AutoMapper;
 using React_Backend.Application.Enums;
 using React_Backend.Application.Models;
-using React_Backend.Domain.Entities;
+
 
 
 namespace React_Backend.Application.Mapper
@@ -12,7 +12,10 @@ namespace React_Backend.Application.Mapper
         public AppointmentProfile()
         {
             CreateMap<object, AppointmentModel>();
-            CreateMap<AppointmentModel, Appointment>();
+            CreateMap<AppointmentModel, Domain.Entities.Appointment>();
+
+            CreateMap<AppointmentFilter, Domain.Entities.AppointmentFilter>();
+            CreateMap<Domain.Entities.AppointmentFilter, AppointmentFilter>();
 
 
             CreateMap<EnumEntities.AppointmentStatus,Domain.Enums.EnumEntities.AppointmentStatus>();

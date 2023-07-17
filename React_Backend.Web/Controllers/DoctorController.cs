@@ -14,7 +14,7 @@ namespace React_Backend.Web.Controllers
         public readonly IDoctorService _doctorService;
         public readonly IScheduleService _sheduleService;
         private readonly IdentityHelper _identifyHelper;
-        //private readonly ILogger<DoctorController> _logger;
+       
 
         public DoctorController( IDoctorService doctorService, IScheduleService sheduleService,IdentityHelper identifyHelper)
         {
@@ -23,22 +23,35 @@ namespace React_Backend.Web.Controllers
            _identifyHelper = identifyHelper
 ;        }
 
+   
+        /// <summary>
+        ///  Usig this method we can see doctor appointments. By default it will show current date appoints.
+        /// </summary>
+        /// <returns></returns>
         [Authorize(AuthenticationSchemes = "Bearer", Roles = "Doctor")]
-        [HttpGet(Name = "doctorappointments")]
+        [HttpPost(Name = "doctorappointments")]
         
-        public IEnumerable<object> Get()
+        public IEnumerable<object> Get(AppointmentFilter model)
         {
-            var result = _doctorService.GetAll(_identifyHelper.UserId);
-            return result;
-        }
-        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Doctor")]
-        [HttpPost(Name = "addschedule")]
-        public Schedule Create([FromForm] Schedule model)
-        {
+            if (model.Date == null)
+            {
+                var dateToday = DateTime.Now;
+                DateTime formatDateToday = new DateTime(dateToday.Year, dateToday.Month, dateToday.Day);
+                DateOnly formatDateOnly = DateOnly.FromDateTime(formatDateToday);
+                model.Date = formatDateOnly;
+            }
             model.DoctorId = _identifyHelper.UserId;
-            var result = _sheduleService.Create(model);
+            var result = _doctorService.GetAll(model);
             return result;
-
         }
+        //[Authorize(AuthenticationSchemes = "Bearer", Roles = "Doctor")]
+        //[HttpPost(Name = "addschedule")]
+        //public Schedule Create([FromForm] Schedule model)
+        //{
+        //    model.DoctorId = _identifyHelper.UserId;
+        //    var result = _sheduleService.Create(model);
+        //    return result;
+
+        //}
     }
 }

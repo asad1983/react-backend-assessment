@@ -23,6 +23,10 @@ namespace React_Backend.Web.Controllers
             _identifyHelper = identifyHelper;
         }
 
+        /// <summary>
+        ///  Usig this method we can see patient appointments.
+        /// </summary>
+        /// <returns></returns>
         [Authorize(AuthenticationSchemes = "Bearer", Roles = "Patient")]
         [HttpGet(Name = "patientsappointments")]
         public IEnumerable<object> Get()
@@ -30,6 +34,10 @@ namespace React_Backend.Web.Controllers
             return _service.GetAll(_identifyHelper.UserId);
         }
 
+        /// <summary>
+        ///  Usig this method patient can book an appointments.
+        /// </summary>
+        /// <returns></returns>
         [Authorize(AuthenticationSchemes = "Bearer", Roles = "Patient")]
         [HttpPost(Name = "createappointment")]
         [Description("Create a new Appointment")]
@@ -43,6 +51,11 @@ namespace React_Backend.Web.Controllers
              //return Ok(model);
         }
 
+
+        /// <summary>
+        ///  Usig this method patient can delete an appointments.
+        /// </summary>
+        /// <returns></returns>
         [Authorize(AuthenticationSchemes = "Bearer", Roles = "Patient")]
         [HttpDelete]
         [Description("Delete a new Appointment")]
