@@ -57,7 +57,7 @@ public class DoctorServiceTests
     [Test]
     public  void Doctor_Apppointments_Get()
     {
-
+        // Arrange
         var now = DateTime.Now.AddDays(3);
         now = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0);
         var formatDateToday = new DateTime(now.Year, now.Month, now.Day);
@@ -69,7 +69,11 @@ public class DoctorServiceTests
         };
 
         DoctorService _service = new DoctorService(_appointmentRepository.Object,_mapper.Object);
+
+        // Act
         var result = _service.GetAll(filter);
+
+        // Assert
         Assert.AreEqual(1, result.Count());
     }
 

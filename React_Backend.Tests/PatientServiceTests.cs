@@ -29,7 +29,6 @@ public class PatientServiceTests
     [SetUp]
     public void Setup()
     {
-
         dateToday = DateTime.Now.AddDays(5);
         var appointmentList = new List<object>();
         formatDateToday = new DateTime(dateToday.Year, dateToday.Month, dateToday.Day);
@@ -92,17 +91,21 @@ public class PatientServiceTests
     [Test]
     public  void Patient_Apppointment_Get()
     {
-       
-        //_mapper.Setup(m => m.Map<Appointment, object>(It.IsAny<Appointment>())).Returns((Appointment src) => new object());
+
+        // Arrange
         PatientService _service = new PatientService(_appointmentRepository.Object,_mapper.Object,_scheduleRepository.Object);
+
+        // Act
         var result = _service.GetAll(Constant.PatientId);
+
+        // Assert
         Assert.AreEqual(1, result.Count());
     }
 
     [Test]
-    public void Patient_Apppointment_Create_Rejected()
+    public void Patient_Apppointment_Create_Conflict()
     {
-
+        // Arrange
         var model = new Appointment()
         {
 
@@ -116,6 +119,7 @@ public class PatientServiceTests
         _appointmentRepository.Setup(p => p.Create(model)).Returns(model);
         PatientService _service = new PatientService(_appointmentRepository.Object, _mapper.Object, _scheduleRepository.Object);
 
+        // Act
         var result = _service.CreateAppointment(new AppointmentModel()
         {
 
@@ -125,12 +129,15 @@ public class PatientServiceTests
             EndTime = TimeOnly.FromTimeSpan(dateToday.AddHours(4).TimeOfDay),
             PatientId = Constant.PatientId,
         });
+
+        // Assert
         Assert.AreEqual("No appoointment is availeable", result);
     }
 
     [Test]
     public void Patient_Apppointment_Create()
     {
+        // Arrange
         var now = DateTime.Now.AddDays(3);
         now = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0);
         var formatDateToday = new DateTime(now.Year, now.Month, now.Day);
@@ -147,6 +154,8 @@ public class PatientServiceTests
 
         _appointmentRepository.Setup(p => p.Create(model)).Returns(model);
         PatientService _service = new PatientService(_appointmentRepository.Object, _mapper.Object, _scheduleRepository.Object);
+
+        // Act
         var result = _service.CreateAppointment(new AppointmentModel()
         {
 
@@ -156,14 +165,19 @@ public class PatientServiceTests
             EndTime = TimeOnly.FromTimeSpan(now.AddHours(11).TimeOfDay),
             PatientId = Constant.PatientId,
         });
+
+        // Assert
         Assert.AreEqual("Created", result);
     }
     [Test]
     public void Patient_Apppointment_Delete()
     {
+
+        // Arrange
         PatientService _service = new PatientService(_appointmentRepository.Object, _mapper.Object, _scheduleRepository.Object);
         var result = _service.DeleteAppointment(Constant.AppointmentId);
 
+        // Assert
         Assert.AreEqual("Appointment Deleted", result);
     }
 }
