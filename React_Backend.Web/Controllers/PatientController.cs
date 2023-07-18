@@ -12,6 +12,7 @@ namespace React_Backend.Web.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize(AuthenticationSchemes = "Bearer", Roles = "Patient")]
     public class PatientController : ControllerBase
     {
        
@@ -24,21 +25,19 @@ namespace React_Backend.Web.Controllers
         }
 
         /// <summary>
-        ///  Usig this method we can see patient appointments.
+        ///  Using this method we can see patient appointments.
         /// </summary>
         /// <returns></returns>
-        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Patient")]
         [HttpGet(Name = "patientsappointments")]
-        public IEnumerable<object> Get()
+        public IActionResult Get()
         {
-            return _service.GetAll(_identifyHelper.UserId);
+            return Ok(_service.GetAll(_identifyHelper.UserId));
         }
 
         /// <summary>
-        ///  Usig this method patient can book an appointments.
+        ///  Using this method patient can book an appointments.
         /// </summary>
         /// <returns></returns>
-        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Patient")]
         [HttpPost(Name = "createappointment")]
         [Description("Create a new Appointment")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
@@ -53,20 +52,28 @@ namespace React_Backend.Web.Controllers
 
 
         /// <summary>
-        ///  Usig this method patient can delete an appointments.
+        ///  Using this method patient can delete an appointments.
         /// </summary>
         /// <returns></returns>
-        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Patient")]
         [HttpDelete]
         [Description("Delete a new Appointment")]
         [Route("{id}")]
         [ServiceFilter(typeof(AppointmentDeleteFilter), Order = 1)]
         public IActionResult Delete(string id)
         {
-            _service.DeleteAppointment(id);
-            return Ok("Deleted");
+            var reulst = _service.DeleteAppointment(id);
+            return Ok(reulst);
         }
 
-
+        /// <summary>
+        ///  Using this method patient can update an appointments.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut]
+        public IActionResult Put([FromForm]EditAppointmentModel model)
+        {
+            var reulst=_service.UpdateAppointment(model);
+            return Ok(reulst);
+        }
     }
 }

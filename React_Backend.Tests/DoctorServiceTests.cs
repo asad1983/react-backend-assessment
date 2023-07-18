@@ -3,7 +3,7 @@ using React_Backend.Application.Services;
 using AutoMapper;
 using React_Backend.Domain.Interfaces;
 using React_Backend.Application.Models;
-
+using React_Backend.Application.Models.ViewModels;
 
 namespace React_Backend.Tests;
 
@@ -31,16 +31,28 @@ public class DoctorServiceTests
         var endTime = TimeOnly.FromTimeSpan(now.AddHours(4).TimeOfDay);
 
         
-        var appointmentList = new List<object>();
+        var appointmentList = new List<Domain.ViewModels.AppointmentViewModel>();
 
-        appointmentList.Add(new
+        appointmentList.Add(new Domain.ViewModels.AppointmentViewModel
         {
             Detail = "test",
             Title = "test",
             Patient = "Patient",
             StartTime = startTime,
             EndTime = endTime,
-            Id = Constant.AppointmentId
+            Id =new Guid(Constant.AppointmentId)
+        });
+
+        var appointmentListData = new List<AppointmentViewModel>();
+
+        appointmentListData.Add(new AppointmentViewModel
+        {
+            Detail = "test",
+            Title = "test",
+            Patient = "Patient",
+            StartTime = startTime,
+            EndTime = endTime,
+            Id = new Guid(Constant.AppointmentId)
         });
 
         var filter = new Domain.Entities.AppointmentFilter
@@ -50,6 +62,8 @@ public class DoctorServiceTests
         };
 
         _mapper.Setup(mock => mock.Map<Domain.Entities.AppointmentFilter>(It.IsAny<AppointmentFilter>())).Returns(filter);
+
+        _mapper.Setup(mock => mock.Map<IEnumerable<AppointmentViewModel>>(It.IsAny<IEnumerable<Domain.ViewModels.AppointmentViewModel>>())).Returns(appointmentListData);
         _appointmentRepository.Setup(m => m.GetAll(filter)).Returns(appointmentList);
       
     }

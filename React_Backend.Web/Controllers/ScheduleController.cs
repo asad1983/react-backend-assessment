@@ -3,13 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using React_Backend.Web.Helpers;
 using React_Backend.Application.Interfaces;
 using React_Backend.Application.Models;
-using React_Backend.Application.Models.ViewModels;
 
 namespace React_Backend.Web.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class DoctorController : ControllerBase
+    public class ScheduleController : ControllerBase
     {
        
         public readonly IDoctorService _doctorService;
@@ -17,7 +16,7 @@ namespace React_Backend.Web.Controllers
         private readonly IdentityHelper _identifyHelper;
        
 
-        public DoctorController( IDoctorService doctorService, IScheduleService sheduleService,IdentityHelper identifyHelper)
+        public ScheduleController( IDoctorService doctorService, IScheduleService sheduleService,IdentityHelper identifyHelper)
         {
             _doctorService = doctorService;
             _sheduleService = sheduleService;
@@ -26,24 +25,19 @@ namespace React_Backend.Web.Controllers
 
    
         /// <summary>
-        ///  Using this method we can see doctor appointments. By default it will show current date appoints.
+        ///  Using this method  doctor can add his/her schedule.
         /// </summary>
         /// <returns></returns>
+
         [Authorize(AuthenticationSchemes = "Bearer", Roles = "Doctor")]
-        [HttpPost(Name = "doctorappointments")]
-        
-        public IEnumerable<AppointmentViewModel> Get(AppointmentFilter model)
+        [HttpPost(Name = "addschedule")]
+        public Schedule Create([FromForm] Schedule model)
         {
-            if (model.Date == null)
-            {
-                var dateToday = DateTime.Now;
-                DateTime formatDateToday = new DateTime(dateToday.Year, dateToday.Month, dateToday.Day);
-                DateOnly formatDateOnly = DateOnly.FromDateTime(formatDateToday);
-                model.Date = formatDateOnly;
-            }
             model.DoctorId = _identifyHelper.UserId;
-            var result = _doctorService.GetAll(model);
+            model.Status = true;
+            var result = _sheduleService.Create(model);
             return result;
+
         }
     }
 }

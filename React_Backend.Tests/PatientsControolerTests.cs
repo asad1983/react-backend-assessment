@@ -57,6 +57,7 @@ public class PatientsControolerTests
 
         });
         _patientService.Setup(m => m.GetAll(Constant.PatientId)).Returns(list);
+        _patientService.Setup(m => m.DeleteAppointment(Constant.AppointmentId)).Returns("Appointment Deleted");
 
     }
 
@@ -81,23 +82,27 @@ public class PatientsControolerTests
         _patientService.Setup(p => p.CreateAppointment(model)).Returns("Created");
 
         // Assert
-        PatientController doct = new PatientController(_patientService.Object, _identityHelper.Object);
-        var result = doct.Create(model);
+        PatientController controller = new PatientController(_patientService.Object, _identityHelper.Object);
+        var result = controller.Create(model);
         var okResult = result as OkObjectResult;
 
         // Assert
         Assert.AreEqual("Created", okResult.Value);
+        Assert.AreEqual(200, okResult.StatusCode);
     }
 
     [Test]
     public void Patient_Apppointments_Get()
     {
         // Act
-        PatientController doct = new PatientController(_patientService.Object, _identityHelper.Object);
-        var result = doct.Get();
+        PatientController controller = new PatientController(_patientService.Object, _identityHelper.Object);
+        var result = controller.Get();
+        var okResult = result as OkObjectResult;
+        var appointments = okResult.Value as List<object>;
 
         // Assert
-        Assert.AreEqual(1, result.Count());
+        Assert.AreEqual(1, appointments.Count());
+        Assert.AreEqual(200, okResult.StatusCode);
     }
 
     [Test]
@@ -105,12 +110,13 @@ public class PatientsControolerTests
     {
 
         // Act
-        PatientController doct = new PatientController(_patientService.Object, _identityHelper.Object);
-        var result = doct.Delete(new Guid().ToString());
+        PatientController controller = new PatientController(_patientService.Object, _identityHelper.Object);
+        var result = controller.Delete(Constant.AppointmentId);
         var okResult = result as OkObjectResult;
 
         // Assert
-        Assert.AreEqual("Deleted", okResult.Value);
+        Assert.AreEqual("Appointment Deleted", okResult.Value);
+        Assert.AreEqual(200, okResult.StatusCode);
     }
 
 

@@ -1,13 +1,12 @@
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Moq;
 using React_Backend.Web.Helpers;
 using React_Backend.Application.Interfaces;
-using React_Backend.Application.Services;
 using React_Backend.Web.Controllers;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using React_Backend.Application.Models;
+using React_Backend.Application.Models.ViewModels;
 
 namespace React_Backend.Tests;
 
@@ -41,7 +40,7 @@ public class DoctorControllerTests
     public void Setup()
     {
         
-        var list = new List<object>();
+        var appointments = new List<AppointmentViewModel>();
         var now = DateTime.Now.AddDays(3);
         now = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0);
         var formatDateToday = new DateTime(now.Year, now.Month, now.Day);
@@ -49,14 +48,15 @@ public class DoctorControllerTests
         var startTime = TimeOnly.FromTimeSpan(now.AddHours(3).TimeOfDay);
         var endTime = TimeOnly.FromTimeSpan(now.AddHours(4).TimeOfDay);
 
-        list.Add(new
+        appointments.Add(new AppointmentViewModel()
         {
             Detail = "test",
             Title = "test",
             Patient = "Patient",
             StartTime = startTime,
             EndTime = endTime,
-            Id = Constant.AppointmentId
+            Id = new Guid(Constant.AppointmentId),
+            Date= formatDateOnly,
 
         });
         var filter = new AppointmentFilter
@@ -64,7 +64,7 @@ public class DoctorControllerTests
             DoctorId=Constant.DoctorId,
             Date= formatDateOnly
         };
-        _doctorService.Setup(m => m.GetAll(filter)).Returns(list);
+        _doctorService.Setup(m => m.GetAll(filter)).Returns(appointments);
 
     }
 
@@ -80,15 +80,10 @@ public class DoctorControllerTests
             DoctorId = Constant.DoctorId,
             Date = formatDateOnly
         };
-        DoctorController doct = new DoctorController(_doctorService.Object, _sheduleService.Object, _identityHelper.Object);
-        var result = doct.Get(filter);
-        //Assert.True(list.Equals(result));
+        DoctorController controller = new DoctorController(_doctorService.Object, _sheduleService.Object, _identityHelper.Object);
+        var result = controller.Get(filter);
+        //Assert.True(list.Equals(result));   Due to some reason this test case is not working
     }
 }
 
 
-public class AppUser
-{
-    public string Id { get; set; }
-    public string UserName { get; set; }
-}

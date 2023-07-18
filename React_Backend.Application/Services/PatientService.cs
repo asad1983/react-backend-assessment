@@ -2,7 +2,6 @@
 using React_Backend.Application.Interfaces;
 using React_Backend.Application.Models;
 using React_Backend.Domain.Entities;
-using React_Backend.Domain.Enums;
 using React_Backend.Domain.Interfaces;
 
 
@@ -37,11 +36,11 @@ namespace React_Backend.Application.Services
             var doctorSchedules = _scheduleRepository.GetAll(model.DoctorId, day.ToString());
             if(doctorSchedules == null && doctorSchedules.Count()==0)
             {
-                return "No appoointment is availeable";
+                return "Doctor is not availeable on selected day";
             }
             else if (!ConfirmDoctorScheduleTime(doctorSchedules, model.StartTime,model.EndTime))
             {
-                return "No appoointment is availeable";
+                return "Doctor is not availeable at this time";
             }
             else if (!ConfirmAppointmentAvaileablity(model.DoctorId,model.AppointmentDate,model.StartTime))
             {
@@ -55,11 +54,60 @@ namespace React_Backend.Application.Services
             }
            
         }
+        public string UpdateAppointment(EditAppointmentModel model)
+        {
+
+            var day = model.AppointmentDate.DayOfWeek;
+            var doctorSchedules = _scheduleRepository.GetAll(model.DoctorId, day.ToString());
+            if (doctorSchedules == null && doctorSchedules.Count() == 0)
+            {
+                return "This Doctor is not availeable for selected day";
+            }
+            else if (!ConfirmDoctorScheduleTime(doctorSchedules, model.StartTime, model.EndTime))
+            {
+                return "This Doctor is not availeable for selected time";
+            }
+            else
+            {
+                var filter = new Domain.Entities.AppointmentFilter
+                {
+                    DoctorId = model.DoctorId,
+                    Date = model.AppointmentDate,
+                };
+                var doctorappointmentsList = _appointmentRepository.GetAll(filter);
+                var filterAppointmentsList = doctorappointmentsList.Where(x => x.Id != model.AppointmentId);
+                var appointmentDto = _appointmentRepository.Get(model.AppointmentId.ToString());
+
+                if (appointmentDto.AppointmentDate!=model.AppointmentDate && !ConfirmAppointmentAvaileablity(model.DoctorId, model.AppointmentDate, model.StartTime))
+                {
+                    return "No appoointment is availeable";
+                }
+                else if(appointmentDto.AppointmentDate == model.AppointmentDate && !CheckAppointmentOverLap(filterAppointmentsList, model.StartTime))
+                {
+                    return "Your appointment is overlap. You can not update your appointment";
+                }
+                else
+                {
+                    appointmentDto.StartTime=model.StartTime;
+                    appointmentDto.EndTime=model.EndTime;
+                    appointmentDto.AppointmentDate=model.AppointmentDate;
+                    //_appointmentRepository.Update(appointmentDto);
+
+                }
+                return "Updated";
+
+            }
+
+        }
         public string DeleteAppointment(string appointmentId)
         {
             var obj = _appointmentRepository.Get(appointmentId);
-            _appointmentRepository.Delete(obj);
-            return "Appointment Deleted";
+            if (obj != null)
+            {
+                _appointmentRepository.Delete(obj);
+                return "Appointment Deleted";
+            }
+            return "Invalid appointment";
 
         }
 
@@ -87,6 +135,20 @@ namespace React_Backend.Application.Services
             foreach (var restult in restults)
             {
                 if (restult.StartTime >= appointmentStartTime && restult.EndTime <= appointmentStartTime)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+
+        private bool CheckAppointmentOverLap(IEnumerable<Domain.ViewModels.AppointmentViewModel> appointments, TimeOnly startTime)
+        {
+
+            foreach (var schedule in appointments)
+            {
+                if (startTime>=schedule.StartTime && startTime <= schedule.EndTime)
                 {
                     return false;
                 }

@@ -29,12 +29,12 @@ namespace React_Backend.Web.Controllers
             _roleManager = roleManager;
             _configuration = configuration;
         }
-        //public AccountController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
-        //{
-        //    this.userManager = userManager;
-        //    this.roleManager = roleManager;
-        //    _configuration = configuration;
-        //}
+
+
+        /// <summary>
+        ///  Using this method  doctor/patient can login.
+        /// </summary>
+        /// <returns></returns>
 
         [HttpPost]
         [Route("login")]
@@ -74,9 +74,14 @@ namespace React_Backend.Web.Controllers
                     expiration = token.ValidTo
                 });
             }
-            return Unauthorized();
+            return Ok("Invalid Username or Password");
         }
 
+
+        /// <summary>
+        ///  Using this method  doctor/patient can register.
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))] 
         [Route("register")]

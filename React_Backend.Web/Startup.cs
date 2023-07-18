@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using React_Backend.Application.Middlewares;
@@ -57,7 +56,8 @@ namespace React_Backend.Application.Web
             //services.AddSwaggerGen();
             services.AddSwaggerGen(opt =>
             {
-                opt.SwaggerDoc("v1", new OpenApiInfo { Title = "Hospital", Version = "v1" });
+                opt.SwaggerDoc("v1", new OpenApiInfo { Title = "Medical Appointment API", Description = "This API allows patients to schedule medical appointments with doctors from different specialties. The API supports functionalities such as appointment scheduling, appointment management (view, change, and cancel), and doctor's view of their patients' appointments for the day.", Version = "v1" });
+               // opt.SchemaFilter<SwaggerSkipPropertyFilter>();
                 
                 opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {

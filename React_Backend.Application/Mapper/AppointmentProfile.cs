@@ -2,8 +2,7 @@
 using AutoMapper;
 using React_Backend.Application.Enums;
 using React_Backend.Application.Models;
-
-
+using React_Backend.Application.Models.ViewModels;
 
 namespace React_Backend.Application.Mapper
 {
@@ -13,6 +12,9 @@ namespace React_Backend.Application.Mapper
         {
             CreateMap<object, AppointmentModel>();
             CreateMap<AppointmentModel, Domain.Entities.Appointment>();
+
+            CreateMap<AppointmentViewModel, Domain.ViewModels.AppointmentViewModel>();
+            CreateMap<Domain.ViewModels.AppointmentViewModel, AppointmentViewModel>();
 
             CreateMap<AppointmentFilter, Domain.Entities.AppointmentFilter>();
             CreateMap<Domain.Entities.AppointmentFilter, AppointmentFilter>();
