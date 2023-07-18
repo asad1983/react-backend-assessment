@@ -4,11 +4,11 @@ This API allows patients to schedule medical appointments with doctors from diff
 
 # Technologies Used
 
-- NET Core: The API is developed using .NET Core framework, providing a robust and scalable foundation.
-  - Entity Framework Core: It is used for data access and database integration.
-  * Sql Server for database management
-  - Authentication and Authorization: The API implements authentication and authorization mechanisms to secure the endpoints.
-    - Moq Library for unit tests
+- NET Core
+- Entity Framework
+- Sql Server for database management
+- Authentication and Authorization
+- Moq Library for unit tests
 
 # Getting Started
 
@@ -39,7 +39,7 @@ This API allows patients to schedule medical appointments with doctors from diff
 
 # Schedule
 
-##### Post /Schedule:Doctor can add his schedule.
+##### Post /Schedule:Doctor can add his/her schedule.
 
 # Authentication and Authorization
 
