@@ -91,7 +91,7 @@ namespace React_Backend.Application.Services
                     appointmentDto.StartTime=model.StartTime;
                     appointmentDto.EndTime=model.EndTime;
                     appointmentDto.AppointmentDate=model.AppointmentDate;
-                    //_appointmentRepository.Update(appointmentDto);
+                    _appointmentRepository.Update(appointmentDto);
 
                 }
                 return "Updated";

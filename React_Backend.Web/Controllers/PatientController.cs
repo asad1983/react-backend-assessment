@@ -56,7 +56,7 @@ namespace React_Backend.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpDelete]
-        [Description("Delete a new Appointment")]
+        [Description("Delete Appointment")]
         [Route("{id}")]
         [ServiceFilter(typeof(AppointmentDeleteFilter), Order = 1)]
         public IActionResult Delete(string id)

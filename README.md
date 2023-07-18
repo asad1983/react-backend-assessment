@@ -37,6 +37,8 @@ This API allows patients to schedule medical appointments with doctors from diff
 
 ##### Post /doctor Retrieves all appointments for a specific doctor on a given day.
 
+##### DELETE /doctor/{appointmentId}: Cancels an appointment for a doctor.
+
 # Schedule
 
 ##### Post /Schedule:Doctor can add his/her schedule.
@@ -48,3 +50,13 @@ The API uses authentication and authorization mechanisms to secure the endpoints
 # Testing
 
 Unit tests are available to ensure the functionality and reliability of the API. You can run the tests using the following command:
+
+## Default Doctor
+
+username:doctor
+password:Doctor\*123
+
+## Default Patient
+
+username:patient
+password:Patient\*123

@@ -4,6 +4,8 @@ using React_Backend.Web.Helpers;
 using React_Backend.Application.Interfaces;
 using React_Backend.Application.Models;
 using React_Backend.Application.Models.ViewModels;
+using React_Backend.Web.Filters;
+using System.ComponentModel;
 
 namespace React_Backend.Web.Controllers
 {
@@ -45,5 +47,22 @@ namespace React_Backend.Web.Controllers
             var result = _doctorService.GetAll(model);
             return result;
         }
+
+
+
+        /// <summary>
+        ///  Using this method doctor can delete an appointments.
+        /// </summary>
+        /// <returns></returns>
+        [HttpDelete]
+        [Description("Delete Appointment")]
+        [Route("{id}")]
+        [AllowAnonymous]
+        public IActionResult Delete(string id)
+        {
+            var reulst = _doctorService.Delete(id);
+            return Ok(reulst);
+        }
+
     }
 }

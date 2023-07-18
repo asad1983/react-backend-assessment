@@ -7,5 +7,6 @@ namespace React_Backend.Application.Interfaces
     public interface IDoctorService
     {
         public IEnumerable<AppointmentViewModel> GetAll(AppointmentFilter model);
+        string Delete(string appointmentId);
     }
 }
